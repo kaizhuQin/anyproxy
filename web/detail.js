@@ -4,11 +4,27 @@ define("./detail",['$', 'gallery/underscore/1.6.0/underscore.js'],function(requi
 
 	var tpl = ""+
 		'	<section class="req">'+
-		'		<h4 class="subTitle">request</h4>'+
+		'		<h4 class="subTitle">requestBasicInfo</h4>'+
+		'		<div class="detail">'+
+		'			<ul class="uk-list">'+
+		'			    <li><strong>method : </strong><%= method %> </li>'+
+		'			    <li><strong>path : </strong><br/><%= path %> <span></span></li>'+
+		'			    <li><strong>url : <a href="<%= url %>" target="_blank">点击访问</a></strong><br /><%= url %> <span></span></li>'+
+
+		'			    <li><strong>196测试url : <a href="<%= url %>" target="_blank">点击访问</a></strong><br /><%= url %> <span></span></li>'+
+		'			    <li><strong>预发url : <a href="<%= url %>" target="_blank">点击访问</a></strong><br /><%= url %> <span></span></li>'+
+		'			    <li><strong>线上url : <a href="<%= url %>" target="_blank">点击访问</a></strong><br /><%= url %> <span></span></li>'+
+
+
+		'			</ul>'+
+		'		</div>'+
+		'	</section>'+
+
+		'	<section class="req">'+
+		'		<h4 class="subTitle">requestDetail</h4>'+
 		'		<div class="detail">'+
 		'			<ul class="uk-list">'+
 		'			    <li><%= method %> <span title="<%= path %>"><%= path %></span> HTTP/1.1</li>'+
-		// '			    <li></li>'+
 		'			    <% _.each(reqHeader, function(v,k) { %> <li><strong><%= k %></strong> : <%= v %></li><% }); %>'+
 		'			</ul>'+
 		'		</div>'+
