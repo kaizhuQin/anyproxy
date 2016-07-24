@@ -39,9 +39,6 @@ function proxyWebServer(port,webSocketPort,proxyConfigPort,ruleSummary,ipAddress
 
     app.get("/body",function(req,res){
 
-        console.log(req);
-        // console.log(res);
-
         var id = req.query.id;
 
         res.setHeader("Content-Type","text/html");

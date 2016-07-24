@@ -1,6 +1,7 @@
 define("./detail",['$', 'gallery/underscore/1.6.0/underscore.js'],function(require,exports,module){
 	var _ = require("gallery/underscore/1.6.0/underscore.js"),
 		$ = require("$");
+		var domainConfig = require('./domainConfig.js');
 
 	var tpl = ""+
 		'	<section class="req">'+
@@ -14,7 +15,7 @@ define("./detail",['$', 'gallery/underscore/1.6.0/underscore.js'],function(requi
 		'			    <li><strong>196测试url : <a href="<%= url %>" target="_blank">点击访问</a></strong><br /><%= url %> <span></span></li>'+
 		'			    <li><strong>预发url : <a href="<%= url %>" target="_blank">点击访问</a></strong><br /><%= url %> <span></span></li>'+
 		'			    <li><strong>线上url : <a href="<%= url %>" target="_blank">点击访问</a></strong><br /><%= url %> <span></span></li>'+
-
+		'	<% _.each(mySiteDomainLink, function(v,k) { %> <li><strong><%= k %></strong> : <%= v %></li><% }); %>'+
 
 		'			</ul>'+
 		'		</div>'+
@@ -57,6 +58,54 @@ define("./detail",['$', 'gallery/underscore/1.6.0/underscore.js'],function(requi
 		'	<% } %>';
 
 	function render(data,cb){
+
+		/**********************config domain***************************/
+		
+		console.log(domainConfig);
+		// console.log(data);
+		var mySiteDomain = {};
+		var mySiteDomainLink = {};
+		
+		// var domainConfig = {
+  //           'mDomain':{
+  //               'dev':'m.xueqiu360.net',
+  //               'prerelease':'mtest.gxq168.com',
+  //               'release':'m.gxq168.com'
+  //           },
+  //           'appwebDomain':{
+  //               'dev':'appweb.xueqiu360.net',
+  //               'prerelease':'appwebtest.gxq168.com',
+  //               'release':'appweb.gxq168.com'
+  //           },
+  //           'serviceDomain':{
+  //               'dev':'service.xueqiu360.net',
+  //               'prerelease':'servicetest.gxq168.com',
+  //               'release':'service.gxq168.com'
+  //           }
+  //       };
+
+  //       for(var damianName in domainConfig)
+  //       {
+  //       	for (var env in domainConfig[damianName]) 
+  //       	{
+  //   			if(domainConfig[damianName][env] == data.host)
+  //   			{
+  //   				// mySiteDomain ＝ domainConfig[damianName];
+  //   				console.log(domainConfig[damianName]);
+  //   			};
+  //   		};	
+  //       }
+
+  //       if(mySiteDomain.length)
+  //       {
+  //       	for(var env in mySiteDomain){
+  //       		mySiteDomainLink[env] = data.protocol+"://"+mySiteDomain[env]+data.path;
+  //       	}
+  //       }
+
+  //       data['mySiteDomainLink'] = mySiteDomainLink;
+		/**********************config domain***************************/
+
 		var $baseTpl = $(_.template(tpl, data));
 
 	    if(data.statusCode){ //if finished
