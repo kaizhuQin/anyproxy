@@ -1,7 +1,7 @@
-define("./detail",['$', 'gallery/underscore/1.6.0/underscore.js'],function(require,exports,module){
+define("./detail",['$', 'gallery/underscore/1.6.0/underscore.js', './domainConfig'],function(require,exports,module){
 	var _ = require("gallery/underscore/1.6.0/underscore.js"),
 		$ = require("$");
-		var domainConfig = require('./domainConfig.js');
+	var domainFilterConfig = require('./domainConfig');
 
 	var tpl = ""+
 		'	<section class="req">'+
@@ -64,29 +64,11 @@ define("./detail",['$', 'gallery/underscore/1.6.0/underscore.js'],function(requi
 	function render(data,cb){
 
 		/**********************config domain***************************/
-		
-		// console.log(domainConfig);
-		// console.log(data);
+
 		var mySiteDomain = {};
 		var mySiteDomainLink = {};
 		
-		var domainConfig = {
-            'mDomain':{
-                'dev':'m.xueqiu360.net',
-                'prerelease':'mtest.gxq168.com',
-                'release':'m.gxq168.com'
-            },
-            'appwebDomain':{
-                'dev':'appweb.xueqiu360.net',
-                'prerelease':'appwebtest.gxq168.com',
-                'release':'appweb.gxq168.com'
-            },
-            'serviceDomain':{
-                'dev':'service.xueqiu360.net',
-                'prerelease':'servicetest.gxq168.com',
-                'release':'service.gxq168.com'
-            }
-        };
+		var domainConfig = domainFilterConfig.getDomainConfig();
 
         for(var damianName in domainConfig)
         {
@@ -101,7 +83,6 @@ define("./detail",['$', 'gallery/underscore/1.6.0/underscore.js'],function(requi
 
         if(mySiteDomain)
         {
-        	console.log(mySiteDomain);
         	for(var env in mySiteDomain){
         		mySiteDomainLink[env] = data.protocol+"://"+mySiteDomain[env]+data.path;
         	}
