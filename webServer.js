@@ -40,12 +40,19 @@ function proxyWebServer(port,webSocketPort,proxyConfigPort,ruleSummary,ipAddress
     app.get("/body",function(req,res){
 
         var id = req.query.id;
+        var dataType = req.query.dataType;
 
         res.setHeader("Content-Type","text/html");
         res.writeHead(200);
 
         fetchBody(id,function(body){
-            res.end(ent.encode(body));
+            if(dataType=='json')
+            {
+                res.end(body);
+            } else {
+                res.end(ent.encode(body));
+            }
+            // res.end(ent.encode(body));
         });
     });
 
