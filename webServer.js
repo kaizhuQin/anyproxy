@@ -129,7 +129,7 @@ function proxyWebServer(port,webSocketPort,proxyConfigPort,ruleSummary,ipAddress
 
     self.on("update",function(data){
         wss.broadcast( JSON.stringify(data) );
-    })
+    });
 
     self.app  = app;
     self.wss  = wss;

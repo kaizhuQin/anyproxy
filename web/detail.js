@@ -133,33 +133,44 @@ define("./detail",['$', 'gallery/underscore/1.6.0/underscore.js', './domainConfi
 		var $baseTpl = $(_.template(tpl, data));
 
 		var dataType = 'html';
+
 		var ContentType = data['resHeader']['Content-Type'];
 		if(ContentType && ContentType.indexOf("json")>0)
 		{
 			dataType = 'json';
 		}
 
+		var isImgUrl = false;
+		try{
+			isImgUrl = isImg(data["url"]);
+		}catch (e){}
+
 	    if(data.statusCode){ //if finished
-	    	$.ajax({
-	    		url     : "/body?id=" + data._id + '&dataType=' + dataType,
-	    		headers : {
-	    			anyproxy_web_req : true
-	    		},
-	    		type    : "GET",
-	    		success : function(bodyData){
-					if(dataType=='json')
-					{
-						var dataF = eval("(" + bodyData + ")");
-						var jsonDataFormat = JSON.stringify(dataF, null, 2);
-						jsonDataFormat = syntaxHighlight(jsonDataFormat);
-						$(".J_responseBody", $baseTpl).html(jsonDataFormat);
-						cb($baseTpl);
-					} else {
-						$(".J_responseBody", $baseTpl).html(bodyData);
-						cb($baseTpl);
+	    	if(isImgUrl){
+				$(".J_responseBody", $baseTpl).html("<img src='"+data['url']+"'></img>");
+				cb($baseTpl);
+			}else {
+				$.ajax({
+					url     : "/body?id=" + data._id + '&dataType=' + dataType,
+					headers : {
+						anyproxy_web_req : true
+					},
+					type    : "GET",
+					success : function(bodyData){
+						if(dataType=='json')
+						{
+							var dataF = eval("(" + bodyData + ")");
+							var jsonDataFormat = JSON.stringify(dataF, null, 2);
+							jsonDataFormat = syntaxHighlight(jsonDataFormat);
+							$(".J_responseBody", $baseTpl).html(jsonDataFormat);
+							cb($baseTpl);
+						} else {
+							$(".J_responseBody", $baseTpl).html(bodyData);
+							cb($baseTpl);
+						}
 					}
-		    	}
-	    	});
+				});
+			}
 	    }else{
 	    	cb($baseTpl);
 	    }
@@ -198,6 +209,18 @@ define("./detail",['$', 'gallery/underscore/1.6.0/underscore.js', './domainConfi
 			}
 			return '<span class="' + cls + '">' + match + '</span>';
 		});
+	}
+
+	//判断是否为图片资源
+	function isImg(file) {
+		var isImg = false;
+		var ImageFileExtend = ".gif,.png,.jpg,.ico,.bmp";
+		//判断后缀
+		var fileExtend = file.substring(file.lastIndexOf('.')).toLowerCase();
+		if (ImageFileExtend.indexOf(fileExtend) > -1) {
+			isImg = true;
+		}
+		return isImg;
 	}
 
 	exports.render = render;
