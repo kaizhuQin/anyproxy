@@ -164,7 +164,12 @@ define("./detail",['$', 'gallery/underscore/1.6.0/underscore.js', './domainConfi
 					},
 					type    : "GET",
 					success : function(bodyData){
-						if(dataType=='json' || ContentType.indexOf("text/html")>=0)
+					    var isText = false;
+                        try{
+                            isText = ContentType.indexOf("text/")>=0;
+                        }catch (e){}
+
+						if(dataType=='json' || isText)
 						{
 						    try{
                                 var dataF = eval("(" + bodyData + ")");
