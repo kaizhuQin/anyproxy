@@ -159,11 +159,16 @@ define("./detail",['$', 'gallery/underscore/1.6.0/underscore.js', './domainConfi
 					success : function(bodyData){
 						if(dataType=='json')
 						{
-							var dataF = eval("(" + bodyData + ")");
-							var jsonDataFormat = JSON.stringify(dataF, null, 2);
-							jsonDataFormat = syntaxHighlight(jsonDataFormat);
-							$(".J_responseBody", $baseTpl).html(jsonDataFormat);
-							cb($baseTpl);
+						    try{
+                                var dataF = eval("(" + bodyData + ")");
+                                var jsonDataFormat = JSON.stringify(dataF, null, 2);
+                                jsonDataFormat = syntaxHighlight(jsonDataFormat);
+                                $(".J_responseBody", $baseTpl).html(jsonDataFormat);
+                                cb($baseTpl);
+                            }catch (e){
+                                $(".J_responseBody", $baseTpl).html(bodyData);
+                                cb($baseTpl);
+                            }
 						} else {
 							$(".J_responseBody", $baseTpl).html(bodyData);
 							cb($baseTpl);
