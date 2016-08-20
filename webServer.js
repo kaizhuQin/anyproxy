@@ -46,13 +46,15 @@ function proxyWebServer(port,webSocketPort,proxyConfigPort,ruleSummary,ipAddress
         res.writeHead(200);
 
         fetchBody(id,function(body){
-            if(dataType=='json')
-            {
-                res.end(body);
-            } else {
-                res.end(ent.encode(body));
-            }
+            // if(dataType=='json')
+            // {
+            //     res.end(body);
+            // } else {
+            //     res.end(ent.encode(body));
+            // }
             // res.end(ent.encode(body));
+
+            res.end(body);
         });
     });
 

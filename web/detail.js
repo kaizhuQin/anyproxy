@@ -108,7 +108,6 @@ define("./detail",['$', 'gallery/underscore/1.6.0/underscore.js', './domainConfi
         }
 
         data['mySiteDomainLink'] = mySiteDomainLink;
-		// console.log(data);
 		/**********************config domain***************************/
 
 		/**********************get params***************************/
@@ -141,9 +140,17 @@ define("./detail",['$', 'gallery/underscore/1.6.0/underscore.js', './domainConfi
 		}
 
 		var isImgUrl = false;
-		try{
-			isImgUrl = isImg(data["url"]);
-		}catch (e){}
+
+        if(ContentType && ContentType.indexOf("image")>=0)
+        {
+            isImgUrl = true;
+        }
+
+        if(isImgUrl==false){
+            try{
+                isImgUrl = isImg(data["url"]);
+            }catch (e){}
+        }
 
 	    if(data.statusCode){ //if finished
 	    	if(isImgUrl){
@@ -157,7 +164,7 @@ define("./detail",['$', 'gallery/underscore/1.6.0/underscore.js', './domainConfi
 					},
 					type    : "GET",
 					success : function(bodyData){
-						if(dataType=='json')
+						if(dataType=='json' || ContentType.indexOf("text/html")>=0)
 						{
 						    try{
                                 var dataF = eval("(" + bodyData + ")");
